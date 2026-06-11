@@ -2,24 +2,25 @@
 set -euo pipefail
 TOKEN=$(cat tokenfile)
 
-LOCAL_FILE="testfile.txt"
+LOCAL_FILE="/mnt/c/Users/Fahim/Downloads/Reolink_Client_User_Manual.pdf"
+LOCAL_FILENAME="Reolink_Client_User_Manual.pdf"
 
 
-# curl -fsSl -G "https://eapi.pcloud.com/listfolder"\
-#   --data-urlencode "auth=$TOKEN" \
-#     --data-urlencode "folderid=0" \
+#  curl -fsSl -G "https://eapi.pcloud.com/listfolder"\
+#    --data-urlencode "auth=$TOKEN" \
+#      --data-urlencode "folderid=0" \
 
-# curl -fsSl "https://eapi.pcloud.com/uploadfile"\
-#   -F "auth=$TOKEN" \
-#   -F "folderid=0" \
-#   -F "filename=$LOCAL_FILE" \
-#   -F "file=@$LOCAL_FILE"
+#  curl -fsSl "https://eapi.pcloud.com/uploadfile"\
+#    -F "auth=$TOKEN" \./up 
+#    -F "folderid=0" \
+#    -F "filename=$LOCAL_FILENAME" \
+#    -F "file=@$LOCAL_FILE"
 
 RESPONSE=$(curl -fsSL \
   "https://eapi.pcloud.com/uploadfile" \
   -F "auth=$TOKEN" \
   -F "folderid=0" \
-  -F "filename=$LOCAL_FILE" \
+  -F "filename=$LOCAL_FILENAME" \
   -F "file=@$LOCAL_FILE")
 
 RESULT=$(echo $RESPONSE | jq '.result')

@@ -15,25 +15,27 @@ then
     echo "tokenfile exist, removing it"
     rm -f "tokenfile"
 else
-    echo "tokenfile not exist, continue"
+    echo "tokenfile does not exist, continue"
 fi
 
 #get a new token
-TOKEN=$(curl -fsSL -G \
+RESPONSE=$(curl -fsSL -G \
   "https://eapi.pcloud.com/login" \
   --data-urlencode "username=$PCLOUDUSER" \
-  --data-urlencode "password=$PCLOUDPASS" \
-  | jq -r '.auth')
+  --data-urlencode "password=$PCLOUDPASS")
 
-  
-if [ -z "$TOKEN" ]; then
-  echo "Failed to obtain token. Please check your credentials."
-  exit 1
+RESULT=$(echo $RESPONSE | jq -r '.result')
+
+if [ "$RESULT" -eq 0 ]; then
+  TOKEN=$(echo $RESPONSE | jq -r '.auth')
+  echo "Token obtained : ${TOKEN:0:10}..."
 else
-  echo "Token obtained :${TOKEN:0:10}..." 
+  ERROR=$(echo $RESPONSE | jq -r '.error')
+  echo "Login failed → result: $RESULT | $ERROR"
+  exit 1
 fi
 
-#store tocken
+#store token
 if [ ! -f "tokenfile" ]
 then 
     echo "$TOKEN" > "tokenfile"
