@@ -5,6 +5,8 @@ set -euo pipefail
 source ../homelab/.secret/pcloud.env
 source functions.sh
 
+: ${LOCAL_FILE:?"LOCAL_FILE est obligatoire"}
+
 login
-upload "$1"
+upload "$LOCAL_FILE"
 logout

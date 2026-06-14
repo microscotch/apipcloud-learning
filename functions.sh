@@ -42,7 +42,7 @@ function login(){
 function upload() {
     TOKEN=$(cat tokenfile)
 
-    LOCAL_FILE="$1"
+    #LOCAL_FILE="$1" a charger depuis une vraiable d'environnement
     LOCAL_FILENAME=$(basename "$LOCAL_FILE")
 
     PROGRESS_HASH=$(uuidgen) # hash unique pour suivre la progression de l'upload
