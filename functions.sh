@@ -83,7 +83,13 @@ function upload() {
     done
 
     wait $UPLOAD_PID  # attend la fin proprement
+    CURL_EXIT=$?
 
+    if [ $CURL_EXIT -ne 0 ]; then
+    echo "curl a échoué → exit code: $CURL_EXIT"
+    exit 1
+    fi
+    
     RESPONSE=$(cat "$TMPFILE")
     rm -f "$TMPFILE"
 
