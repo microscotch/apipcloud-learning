@@ -4,7 +4,7 @@
 ENV_FILE="../homelab/.secret/pcloud.env" #<-- fichier d'environnement contenant les variables d'environnement nécessaires
 #PCLOUDUSER=
 #PCLOUDPASS=
-source "$ENV_FILE"
+[ -f "$ENV_FILE" ] && source "$ENV_FILE" # la condition permet d'utiliser le script manuellement et dans le container qui aura des env
 source functions.sh
 
 if [ $# -lt 1 ]; then
